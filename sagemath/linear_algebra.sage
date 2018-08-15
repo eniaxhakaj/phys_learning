@@ -18,3 +18,4 @@ print(B*v)
 # Matrix ops
 print(B * B)
 print(B.inverse())
+print(B.det()) # or .determinant()
