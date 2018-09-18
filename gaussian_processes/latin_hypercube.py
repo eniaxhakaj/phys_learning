@@ -1,3 +1,4 @@
+import numpy as np
 import pyDOE as p
 import matplotlib.pyplot as plt
 
@@ -13,13 +14,19 @@ lh = p.lhs(2, samples=3)
 # Ignoring ordering, there are 3! possible pairings
 
 # By default we have been sampling randomly but we can also
-lh = p.lhs(2, samples=4, criterion="center")
-lh = p.lhs(2, samples=4, criterion="centermaximin") # I don't really understand this...
+num_samples = 20
 
-plt.scatter(
-        [i[0] for i in lh],
-        [i[1] for i in lh],
-)
+for crit in ["center", "centermaximin", "maximin", "corr"]:
+    lh = p.lhs(2, samples=num_samples, criterion=crit)
+
+    _, ax = plt.subplots()
+
+    ax.scatter(
+            [i[0] for i in lh],
+            [i[1] for i in lh],
+    )
+    for div in np.linspace(0, 1, num=num_samples+1):
+        ax.axvline(div)
+        ax.axhline(div)
+    ax.set(title=crit)
 plt.show()
-
-print(lh)
